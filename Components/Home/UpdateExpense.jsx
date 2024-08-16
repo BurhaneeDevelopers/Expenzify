@@ -4,6 +4,7 @@ import {
   Pressable,
   TextInput,
   ActivityIndicator,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -36,16 +37,16 @@ const UpdateExpense = ({ activeFolder, item }) => {
 
       setLoading(false);
 
-      refRBSheet?.current?.close();
+      updateSheet?.current?.close();
     } catch (error) {
       console.log(error);
       setLoading(false);
     }
   };
 
-  const refRBSheet = useRef();
+  const updateSheet = useRef();
   return (
-    <View className="">
+    <KeyboardAvoidingView className="">
       <RBSheet
         customStyles={{
           draggableIcon: { display: "none" },
@@ -53,15 +54,15 @@ const UpdateExpense = ({ activeFolder, item }) => {
             backgroundColor: "transparent",
           },
         }}
-        ref={refRBSheet}
+        ref={updateSheet}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        height={450}
+        height={500}
       >
         <View className="bg-[#f9f9f9] h-full rounded-t-3xl">
           <Pressable
             className="bg-[#E2E3F0] mx-auto top-3 h-1.5 w-12 rounded-full"
-            onPress={() => refRBSheet.current.close()}
+            onPress={() => updateSheet.current.close()}
           ></Pressable>
 
           <View className="my-auto px-5">
@@ -131,12 +132,13 @@ const UpdateExpense = ({ activeFolder, item }) => {
       <Pressable
         className=""
         onPress={() => {
-          refRBSheet.current.open();
+          updateSheet.current.open();
+          console.log("Pressed")
         }}
       >
         <Edit size={24} color="#fff" />
       </Pressable>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

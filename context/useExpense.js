@@ -83,11 +83,11 @@ export const ExpenseProvider = ({ children }) => {
     }
   };
 
-  const deleteExpenseFromDB = async (docId) => {
+  const deleteExpenseFromDB = async (docId, activeFolder) => {
     try {
-      const response = await DeleteExpenseApi(docId);
+      const response = await DeleteExpenseApi(docId, activeFolder);
 
-      await fetchExpensesFromDB();
+      await fetchExpensesFromDB(activeFolder);
     } catch (error) {
       console.log(error);
     }
