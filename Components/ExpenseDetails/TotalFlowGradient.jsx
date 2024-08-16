@@ -2,8 +2,9 @@ import { View, Text } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useExpense } from "../../context/useExpense";
+import Skeleton from "../Custom/Skeleton";
 
-const TotalFlowGradient = ({ activeFolder }) => {
+const TotalFlowGradient = ({ loading, activeFolder }) => {
   const { expenses } = useExpense();
 
   const totalExpense = expenses.reduce((acc, doc) => {
@@ -24,7 +25,15 @@ const TotalFlowGradient = ({ activeFolder }) => {
       >
         <View className="bg-white rounded-full w-36 h-36 flex-row justify-center items-center">
           <Text className="text-[#ff0000] font-bold text-2xl" numberOfLines={1}>
-            - ₹{totalExpense.toLocaleString("IN")}
+            {loading ? (
+              <Skeleton
+                width={60}
+                height={25}
+                customClass="p-2 px-5 rounded-lg w-96 !shadow-2xl shadow-white/20 overflow-hidden bg-[#f9f9f9] w-full h-20 mt-4"
+              />
+            ) : (
+              `- ₹${totalExpense.toLocaleString("IN")}`
+            )}
           </Text>
         </View>
       </LinearGradient>

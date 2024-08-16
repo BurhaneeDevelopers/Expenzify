@@ -9,7 +9,7 @@ const HomeSkeletonBody = ({ activeFolder }) => {
         // width={100}
         // height={72}
         className={`h-screen !w-full px-5 rounded-t-[30px] shadow-2xl pt-10 overflow-hidden absolute ${
-          activeFolder === "Personal" ? "bg-indigo-700" : "bg-green-700"
+          activeFolder === "Personal" ? "bg-indigo-700" : "bg-[#F43F5E]"
         }`}
       />
       <View className="flex-col px-5 mt-5">

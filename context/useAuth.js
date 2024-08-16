@@ -10,11 +10,13 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const handleCheckUserStatus = async () => {
+    setLoading(true);
     try {
       const session = AsyncStorage.getItem("sessionId");
       if (session) {
         const userData = await account.get();
         setUser(userData);
+        setLoading(false);
       }
 
       if (!session) {
@@ -26,6 +28,7 @@ export const AuthProvider = ({ children }) => {
         const sessionId = await account.getSession("current");
         AsyncStorage.setItem("sessionId", JSON.stringify(sessionId));
         setUser(userDetails);
+        setLoading(false);
       }
       setLoading(false);
     } catch (error) {

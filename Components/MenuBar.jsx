@@ -4,7 +4,8 @@ import { useAuth } from "../context/useAuth";
 import Skeleton from "./Custom/Skeleton";
 import LogOut from "./LogOut";
 
-const MenuBar = ({ navigation, user, title }) => {
+const MenuBar = ({ navigation, title, needUser }) => {
+  const { user, loading } = useAuth();
   return (
     <View className="flex-row w-full justify-between items-center p-5">
       <Image
@@ -12,12 +13,12 @@ const MenuBar = ({ navigation, user, title }) => {
         className="w-10 h-10 absolute top-3 left-5 rounded-full"
       />
 
-      {user?.name != undefined ? (
+      {!loading ? (
         <Text
           className="text-lg text-indigo-600 font-bold mx-auto max-w-[210px]"
           numberOfLines={1}
         >
-          {`${user?.name}'s ${title}`}
+          {needUser ? `${user?.name}'s ${title}` : title}
         </Text>
       ) : (
         <Skeleton

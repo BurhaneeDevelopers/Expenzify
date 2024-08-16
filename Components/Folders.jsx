@@ -19,8 +19,8 @@ const Folders = ({ activeFolder, setActiveFolder }) => {
         onPress={() => setActiveFolder("Home")}
         className={`p-2 px-7 ${
           activeFolder === "Home"
-            ? "bg-green-700 rounded-t-lg h-10"
-            : "bg-green-700 rounded-full"
+            ? "bg-[#F43F5E] rounded-t-lg h-10"
+            : "bg-[#F43F5E] rounded-full"
         }`}
       >
         <Text className="text-white">Home</Text>

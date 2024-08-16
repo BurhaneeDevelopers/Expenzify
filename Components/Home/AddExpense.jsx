@@ -10,6 +10,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { Add } from "iconsax-react-native";
 import CustomDatePicker from "../Custom/DatePicker";
 import { useExpense } from "../../context/useExpense";
+import BottomSheet from "react-native-gesture-bottom-sheet";
 
 const AddExpense = ({ user, activeFolder }) => {
   const [expenseName, setExpenseName] = useState("");
@@ -52,25 +53,24 @@ const AddExpense = ({ user, activeFolder }) => {
   const refRBSheet = useRef();
   return (
     <View className="">
-      <RBSheet
-        customStyles={{
-          draggableIcon: { display: "none" },
-          container: {
-            backgroundColor: "transparent",
-          },
-        }}
+      <BottomSheet
+        // customStyles={{
+        //   draggableIcon: { display: "none" },
+        //   container: {
+        //     backgroundColor: "transparent",
+        //   },
+        // }}
         ref={refRBSheet}
-        closeOnDragDown={true}
-        closeOnPressMask={true}
         height={550}
+        draggableIcon
       >
-        <View className="bg-[#f9f9f9] h-full rounded-t-3xl">
+        <View className="bg-[#f9f9f9] rounded-t-3xl">
           <Pressable
             className="bg-[#E2E3F0] mx-auto top-3 h-1.5 w-12 rounded-full"
-            onPress={() => refRBSheet.current.close()}
+            // onPress={() => refRBSheet.current.close()}
           ></Pressable>
 
-          <View className="my-auto px-5">
+          <View className="px-5 pt-4">
             <Text
               className={`text-xl font-bold ${
                 activeFolder === "Personal"
@@ -132,15 +132,15 @@ const AddExpense = ({ user, activeFolder }) => {
             </Pressable>
           </View>
         </View>
-      </RBSheet>
+      </BottomSheet>
 
       <Pressable
-        className="bg-white active:bg-[#f0f0f0] p-3 rounded-full z-50"
+        className="bg-[#F43F5E] active:bg-[#BE123C] p-3 rounded-full z-50"
         onPress={() => {
-          refRBSheet.current.open();
+          refRBSheet.current.show();
         }}
       >
-        <Add className="text-indigo-700" size={"44"} />
+        <Add className="text-white" size={"44"} />
       </Pressable>
     </View>
   );

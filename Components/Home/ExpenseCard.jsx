@@ -3,9 +3,8 @@ import React from "react";
 import moment from "moment";
 import { Edit, Trash } from "iconsax-react-native";
 import { useExpense } from "../../context/useExpense";
-import UpdateExpense from "./UpdateExpense";
 
-const ExpenseCard = ({ item, activeFolder }) => {
+const ExpenseCard = ({ navigation, item, activeFolder }) => {
   const { deleteExpenseFromDB } = useExpense();
 
   const confirmDelete = (id) => {
@@ -54,7 +53,16 @@ const ExpenseCard = ({ item, activeFolder }) => {
       </Pressable>
 
       <View className="flex-row justify-between items-center">
-        <UpdateExpense activeFolder={activeFolder} item={item} />
+        <Pressable
+          onPress={() =>
+            navigation.navigate("UpdateExpense", {
+              item,
+              activeFolder,
+            })
+          }
+        >
+          <Edit size={24} color="#fff" />
+        </Pressable>
 
         <Pressable onPress={() => confirmDelete(item?.$id)}>
           <Trash size={24} color="#ff0000" />

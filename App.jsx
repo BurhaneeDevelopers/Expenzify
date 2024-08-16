@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { Text, TextInput, View } from "react-native";
-import { Home3 } from "iconsax-react-native";
+import { Add, Home3 } from "iconsax-react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // ----- SCREENS
@@ -17,6 +17,8 @@ import SignInScreen from "./Screens/SigninScreen";
 // ----- PROVIDERS
 import { ExpenseProvider } from "./context/useExpense";
 import { AuthProvider } from "./context/useAuth";
+import UpdateExpenseScreen from "./Screens/UpdateExpenseScreen";
+import AddExpenseScreen from "./Screens/AddExpenseScreen";
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = "#f9f9f9";
@@ -42,6 +44,14 @@ export const AuthenticatedNavigator = () => {
       >
         {(props) => <StackScreen {...props} />}
       </Stack.Screen>
+      <Stack.Screen
+        name="UpdateExpense"
+        component={UpdateExpenseScreen}
+        options={{
+          headerShown: false,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+        }}
+      />
       <Stack.Screen
         name="UnAuthenticate"
         options={{
@@ -117,8 +127,9 @@ export default function App() {
       <NavigationContainer theme={navTheme}>
         <StatusBar
           animated={true}
-          backgroundColor="#ff0000"
+          backgroundColor="#F43F5E"
           // barStyle="dark-content"
+          style="light"
         />
 
         {user ? (
@@ -145,9 +156,10 @@ const TabNavigator = ({ Tab }) => {
       screenOptions={{
         tabBarStyle: {
           height: 70,
-          backgroundColor: "#4F46E5",
+          backgroundColor: "#F43F5E",
           // borderTopLeftRadius: 24,
           // borderTopRightRadius: 24,
+          borderTopWidth: 1,
         },
         tabBarHideOnKeyboard: true,
       }}
@@ -174,9 +186,9 @@ const TabNavigator = ({ Tab }) => {
                   </>
                 ) : (
                   <>
-                    <Home3 size="28" color="#fff" />
+                    <Home3 size="28" color="#000" />
                     <Text
-                      className={`text-white text-sm text-center , ${
+                      className={`text-black text-sm text-center , ${
                         focused ? "" : ""
                       }`}
                     >
@@ -189,6 +201,35 @@ const TabNavigator = ({ Tab }) => {
           },
         }}
       />
+
+      {/* <Tab.Screen
+        name="AddExpense"
+        component={AddExpenseScreen}
+        options={{
+          headerShown: false,
+          tabBarLabelStyle: { display: "none" },
+          ...TransitionPresets.SlideFromRightIOS,
+          tabBarIcon: ({ focused, size }) => {
+            return (
+              <View className="items-center">
+                {focused ? (
+                  <>
+                    <View className="bg-white p-1 rounded-full z-50">
+                      <Add size="28" className="text-indigo-700" />
+                    </View>
+                  </>
+                ) : (
+                  <>
+                    <View className="bg-white p-1.5 rounded-full z-50">
+                      <Add size="32" className="text-indigo-700" />
+                    </View>
+                  </>
+                )}
+              </View>
+            );
+          },
+        }}
+      /> */}
     </Tab.Navigator>
   );
 };
