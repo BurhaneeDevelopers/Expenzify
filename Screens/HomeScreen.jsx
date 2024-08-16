@@ -9,25 +9,9 @@ import { useExpense } from "../context/useExpense";
 import Folders from "../Components/Folders";
 import HomeSkeletonBody from "../Components/Home/HomeSkeletonBody";
 import { useAuth } from "../context/useAuth";
-import * as Updates from "expo-updates";
 
 const HomeScreen = ({ navigation }) => {
   const [activeFolder, setActiveFolder] = useState("Personal");
-  useEffect(() => {
-    onfetchUpdateAsync();
-  }, []);
-
-  const onfetchUpdateAsync = async () => {
-    try {
-      const update = await Updates.checkForUpdateAsync();
-      if (update.isAvailable) {
-        await Updates.fetchUpdateAsync();
-        await Updates.reloadAsync();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const { expenses, fetchExpensesFromDB, loading } = useExpense();
   const { user, handleCheckUserStatus } = useAuth();

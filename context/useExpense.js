@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import {
   AddNewExpenseApi,
   DeleteExpenseApi,
+  UpdateExpenseApi,
   listExpenseApi,
 } from "../Appwrite/Services";
 import { useAuth } from "./useAuth";
@@ -16,8 +17,11 @@ export const ExpenseProvider = ({ children }) => {
   const fetchExpensesFromDB = async (activeFolder) => {
     setLoading(true);
     try {
-      const response = await listExpenseApi(user?.$id, activeFolder);
-      setExpenses(response?.documents);
+      if (user?.$id) {
+        const response = await listExpenseApi(user?.$id, activeFolder);
+        setExpenses(response?.documents);
+        setLoading(false);
+      }
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -58,6 +62,27 @@ export const ExpenseProvider = ({ children }) => {
     }
   };
 
+  const updateExpenseInDB = async (
+    expenseName,
+    expenseAmount,
+    expenseDesc,
+    docId,
+    activeFolder
+  ) => {
+    try {
+      const res = await UpdateExpenseApi(
+        expenseName,
+        expenseAmount,
+        expenseDesc,
+        docId,
+        activeFolder
+      );
+      await fetchExpensesFromDB(activeFolder);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const deleteExpenseFromDB = async (docId) => {
     try {
       const response = await DeleteExpenseApi(docId);
@@ -73,6 +98,7 @@ export const ExpenseProvider = ({ children }) => {
         fetchExpensesFromDB,
         expenses,
         addExpenseInDB,
+        updateExpenseInDB,
         deleteExpenseFromDB,
         loading,
       }}

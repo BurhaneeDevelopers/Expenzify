@@ -56,6 +56,31 @@ export const DeleteExpenseApi = async (docId, activeFolder) => {
   return result;
 };
 
+// EDIT EXPENSES
+export const UpdateExpenseApi = async (
+  expenseName,
+  expenseAmount,
+  expenseDesc,
+  docId,
+  activeFolder
+) => {
+  const result = await databases.updateDocument(
+    "66bdbed7003993b45121", // databaseId
+    activeFolder === "Personal"
+      ? "66be27bd0008c787725e"
+      : "66be27c500242eeb7e04",
+    docId,
+    {
+      expenseName: expenseName,
+      expenseAmount: expenseAmount,
+      expenseDesc: expenseDesc,
+    }, // data
+    ['read("any")'] // permissions (optional)
+  );
+
+  return result;
+};
+
 // ---------------------- SIGN IN ------------------
 
 export const signInUserApi = async (email, password) => {
