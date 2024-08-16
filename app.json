@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "expenzify",
+    "name": "Taheri Expenzify",
     "slug": "expenzify",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -18,10 +18,31 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.taheri_dev72.expenzify"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d8736f70-ace0-42cd-bfea-680332b03e3e"
+      }
+    },
+    "owner": "taheri_dev72",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d8736f70-ace0-42cd-bfea-680332b03e3e"
+    },
+    "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "taheri_dev72"
+        }
+      ]
+    ]
   }
 }
