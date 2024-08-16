@@ -4,14 +4,16 @@ import {
   DeleteExpenseApi,
   listExpenseApi,
 } from "../Appwrite/Services";
+import { useAuth } from "./useAuth";
 
 const ExpenseContext = createContext();
 
 export const ExpenseProvider = ({ children }) => {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
-  const fetchExpensesFromDB = async (user, activeFolder) => {
+  const fetchExpensesFromDB = async (activeFolder) => {
     setLoading(true);
     try {
       const response = await listExpenseApi(user?.$id, activeFolder);
@@ -24,7 +26,6 @@ export const ExpenseProvider = ({ children }) => {
   };
 
   const addExpenseInDB = async (
-    user,
     expenseName,
     expenseAmount,
     expenseDesc,

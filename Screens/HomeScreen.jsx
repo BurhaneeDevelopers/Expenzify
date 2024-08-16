@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
   const { user, handleCheckUserStatus } = useAuth();
 
   useEffect(() => {
-    fetchExpensesFromDB(user, activeFolder);
+    fetchExpensesFromDB(activeFolder);
   }, [activeFolder]);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const HomeScreen = ({ navigation }) => {
 
       <View className="">
         {/* MENU  */}
-        <MenuBar user={user} title={"Expenses"} navigation={navigation} />
+        <MenuBar navigation={navigation} user={user} title={"Expenses"} />
       </View>
 
       {/* Total Expense Cost  */}

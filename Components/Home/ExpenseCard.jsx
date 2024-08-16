@@ -19,7 +19,7 @@ const ExpenseCard = ({ item, activeFolder }) => {
         },
         {
           text: "Delete",
-          onPress: () => deleteExpenseFromDB(id),
+          onPress: () => deleteExpenseFromDB(id, activeFolder),
           style: "destructive",
         },
       ],

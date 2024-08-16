@@ -23,7 +23,6 @@ const AddExpense = ({ user, activeFolder }) => {
     setLoading(true);
     try {
       await addExpenseInDB(
-        user,
         expenseName,
         expenseAmount,
         expenseDesc,

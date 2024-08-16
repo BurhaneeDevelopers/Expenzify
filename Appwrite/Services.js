@@ -1,4 +1,4 @@
-import { ID } from "react-native-appwrite";
+import { ID, Query } from "react-native-appwrite";
 import { account, databases } from "./appwrite";
 
 // -------------------- EXPENSES
@@ -10,7 +10,7 @@ export const listExpenseApi = async (userId, activeFolder) => {
     activeFolder === "Personal"
       ? "66be27bd0008c787725e"
       : "66be27c500242eeb7e04", // collectionId
-    []
+    [Query.equal("userId", userId)]
   );
   return result;
 };
@@ -44,10 +44,12 @@ export const AddNewExpenseApi = async (
 };
 
 // Delete Any Expense
-export const DeleteExpenseApi = async (docId) => {
+export const DeleteExpenseApi = async (docId, activeFolder) => {
   const result = await databases.deleteDocument(
     "66bdbed7003993b45121", // databaseId
-    "66bdbef4003835f64efa", // collectionId
+    activeFolder === "Personal"
+      ? "66be27bd0008c787725e"
+      : "66be27c500242eeb7e04",
     docId
   );
 

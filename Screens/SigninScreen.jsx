@@ -65,7 +65,7 @@ const SignInScreen = ({ navigation }) => {
       setUser(userDetails);
       AsyncStorage.setItem("sessionId", JSON.stringify(sessionId));
       AsyncStorage.setItem("email", JSON.stringify(email));
-      AsyncStorage.setItem("pass", JSON.stringify(pass));
+      AsyncStorage.setItem("pass", JSON.stringify(password));
       navigateAfterAccountCreated();
       setLoading(false);
     } catch (error) {
