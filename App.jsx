@@ -13,12 +13,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // ----- SCREENS
 import HomeScreen from "./Screens/HomeScreen";
 import SignInScreen from "./Screens/SigninScreen";
+import UpdateExpenseScreen from "./Screens/UpdateExpenseScreen";
 
 // ----- PROVIDERS
 import { ExpenseProvider } from "./context/useExpense";
 import { AuthProvider } from "./context/useAuth";
-import UpdateExpenseScreen from "./Screens/UpdateExpenseScreen";
-import AddExpenseScreen from "./Screens/AddExpenseScreen";
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = "#f9f9f9";

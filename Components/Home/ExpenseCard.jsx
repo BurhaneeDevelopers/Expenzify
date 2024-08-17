@@ -47,7 +47,11 @@ const ExpenseCard = ({ navigation, item, activeFolder }) => {
             {item?.expenseDesc}
           </Text>
           <Text className="text-gray-400 text-xs">
-            {moment(item?.date).format("DD MMM YYYY")}
+            {/* {moment(item?.date).format("DD MMM YYYY")} */}
+            {moment(item?.date).calendar(null, {
+              sameDay: "[Today]", // Shows 'Today' if the date is today
+              lastDay: "[Yesterday]", // Shows 'Yesterday' if the date is yesterday
+            })}
           </Text>
         </View>
       </Pressable>

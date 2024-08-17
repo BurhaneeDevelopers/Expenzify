@@ -135,12 +135,12 @@ const AddExpense = ({ user, activeFolder }) => {
       </BottomSheet>
 
       <Pressable
-        className="bg-[#F43F5E] active:bg-[#BE123C] p-3 rounded-full z-50"
+        className="bg-[#F43F5E] active:bg-[#BE123C] p-2 rounded-full z-50"
         onPress={() => {
           refRBSheet.current.show();
         }}
       >
-        <Add className="text-white" size={"44"} />
+        <Add className="text-white" size={"32"} />
       </Pressable>
     </View>
   );
