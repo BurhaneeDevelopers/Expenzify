@@ -7,7 +7,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { Text, TextInput, View } from "react-native";
-import { Add, Home3 } from "iconsax-react-native";
+import {
+  Add,
+  Home3,
+  Wallet,
+  Wallet1,
+  Wallet2,
+  Wallet3,
+} from "iconsax-react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // ----- SCREENS
@@ -18,6 +25,8 @@ import UpdateExpenseScreen from "./Screens/UpdateExpenseScreen";
 // ----- PROVIDERS
 import { ExpenseProvider } from "./context/useExpense";
 import { AuthProvider } from "./context/useAuth";
+import WalletScreen from "./Screens/WalletScreen";
+import { IncomeProvider } from "./context/useIncome";
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = "#f9f9f9";
@@ -144,7 +153,9 @@ export default function App() {
 const ContextProviders = ({ children }) => {
   return (
     <AuthProvider>
-      <ExpenseProvider>{children}</ExpenseProvider>
+      <ExpenseProvider>
+        <IncomeProvider>{children}</IncomeProvider>
+      </ExpenseProvider>
     </AuthProvider>
   );
 };
@@ -201,9 +212,9 @@ const TabNavigator = ({ Tab }) => {
         }}
       />
 
-      {/* <Tab.Screen
-        name="AddExpense"
-        component={AddExpenseScreen}
+      <Tab.Screen
+        name="Wallet"
+        component={WalletScreen}
         options={{
           headerShown: false,
           tabBarLabelStyle: { display: "none" },
@@ -213,22 +224,31 @@ const TabNavigator = ({ Tab }) => {
               <View className="items-center">
                 {focused ? (
                   <>
-                    <View className="bg-white p-1 rounded-full z-50">
-                      <Add size="28" className="text-indigo-700" />
-                    </View>
+                    <Wallet1 size="28" className="text-white" variant="Bold" />
+                    <Text
+                      className={`text-white
+                       text-sm text-center ${focused ? "font-bold" : ""}`}
+                    >
+                      Wallet
+                    </Text>
                   </>
                 ) : (
                   <>
-                    <View className="bg-white p-1.5 rounded-full z-50">
-                      <Add size="32" className="text-indigo-700" />
-                    </View>
+                    <Wallet size="28" color="#000" />
+                    <Text
+                      className={`text-black text-sm text-center , ${
+                        focused ? "" : ""
+                      }`}
+                    >
+                      Wallet
+                    </Text>
                   </>
                 )}
               </View>
             );
           },
         }}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };
