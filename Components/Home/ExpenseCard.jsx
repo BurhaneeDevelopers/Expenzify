@@ -28,7 +28,7 @@ const ExpenseCard = ({ navigation, item, activeFolder }) => {
   };
   return (
     <View className="gap-y-3 w-full mb-5">
-      <Pressable className="bg-white p-2 px-5 rounded-lg w-full !shadow-2xl shadow-white/20">
+      <Pressable className="bg-white px-3 p-2 rounded-lg w-full !shadow-2xl shadow-white/20">
         <View className=" flex-row justify-between items-center">
           <Text
             className={`text-lg font-bold ${
@@ -42,8 +42,8 @@ const ExpenseCard = ({ navigation, item, activeFolder }) => {
           </Text>
         </View>
 
-        <View className=" flex-row justify-between items-end mt-3">
-          <Text className="text-gray-500 text-xs font-bold w-56">
+        <View className=" flex-row justify-between items-center mt-3 gap-x-1">
+          <Text className="text-gray-500 text-xs font-bold w-48">
             {item?.expenseDesc}
           </Text>
           <Text className="text-gray-400 text-xs">

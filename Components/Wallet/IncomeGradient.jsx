@@ -5,16 +5,7 @@ import Skeleton from "../Custom/Skeleton";
 import AddIncome from "./AddIncome";
 import { useIncome } from "../../context/useIncome";
 
-const IncomeGradient = ({ navigation, loading }) => {
-  const { income, fetchIncomeFromDB } = useIncome();
-
-  useEffect(() => {
-    fetchIncomeFromDB();
-  }, []);
-
-  const totalBalance = income.reduce((acc, doc) => {
-    return acc + doc.income || 0;
-  }, 0);
+const IncomeGradient = ({ loading, totalBalance }) => {
   return (
     <View>
       <View className="flex-row gap-x-3 justify-center items-center">
