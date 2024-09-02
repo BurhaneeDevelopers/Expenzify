@@ -67,7 +67,7 @@ const AddIncome = () => {
             <Text className="mt-5 mb-2">Select Income Amount</Text>
             <TextInput
               className="border border-indigo-700 p-2 rounded-xl"
-              placeholder="Enter Expense Amount"
+              placeholder="Enter Income Amount"
               value={income}
               onChangeText={(value) => {
                 setIncome(value);
