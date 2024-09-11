@@ -4,13 +4,25 @@ import { account, databases } from "./appwrite";
 // -------------------- EXPENSES
 
 // LIST ALL Expenses
-export const listExpenseApi = async (userId, activeFolder) => {
+export const listExpenseCountApi = async (userId, activeFolder) => {
   const result = await databases.listDocuments(
     "66bdbed7003993b45121", // databaseId
     activeFolder === "Personal"
       ? "66be27bd0008c787725e"
       : "66be27c500242eeb7e04", // collectionId
-    [Query.equal("userId", userId)]
+    [Query.limit(1), Query.equal("userId", userId)]
+  );
+  return result;
+};
+
+export const listExpenseApi = async (userId, activeFolder) => {
+  const count = await listExpenseCountApi(userId, activeFolder);
+  const result = await databases.listDocuments(
+    "66bdbed7003993b45121", // databaseId
+    activeFolder === "Personal"
+      ? "66be27bd0008c787725e"
+      : "66be27c500242eeb7e04", // collectionId
+    [Query.limit(count), Query.equal("userId", userId)]
   );
   return result;
 };
