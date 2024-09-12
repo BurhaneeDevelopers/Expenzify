@@ -8,7 +8,9 @@ import { useExpense } from "../context/useExpense";
 import Folders from "../Components/Folders";
 import HomeSkeletonBody from "../Components/Home/HomeSkeletonBody";
 import { useAuth } from "../context/useAuth";
-import { ArrowDown, ArrowDown2 } from "iconsax-react-native";
+import { ArrowDown2 } from "iconsax-react-native";
+import { Picker } from "@react-native-picker/picker";
+import moment from "moment";
 
 const HomeScreen = ({ navigation }) => {
   const [activeFolder, setActiveFolder] = useState("Personal");
@@ -16,16 +18,23 @@ const HomeScreen = ({ navigation }) => {
   const { expenses, fetchExpensesFromDB, loading } = useExpense();
   const { user, handleCheckUserStatus } = useAuth();
 
+  // FOR MONTH FILTER
+  const [selectedMonth, setSelectedMonth] = useState(moment().format("MM"));
+
   useEffect(() => {
-    fetchExpensesFromDB(activeFolder);
+    if (expenses.length === 0) {
+      fetchExpensesFromDB(activeFolder);
+    }
   }, [user]);
 
   useEffect(() => {
-    fetchExpensesFromDB(activeFolder);
+    if (expenses.length === 0) {
+      fetchExpensesFromDB(activeFolder);
+    }
   }, [activeFolder]);
 
   useEffect(() => {
-    if (!user) {
+    if (!user || expenses.length === 0) {
       handleCheckUserStatus();
     }
   }, [user]);
@@ -42,13 +51,56 @@ const HomeScreen = ({ navigation }) => {
     setShowAll(!showAll);
   };
 
-  const displayedExpenses = showAll ? expenses : expenses.slice(0, 5);
+  // ----------- TO FILTER ACCORDING TO MONTH --------
+  const filterExpenses = (expenses) => {
+    return expenses.filter((expense) => {
+      const expenseDate = moment(expense.date, "YYYY-MM-DD");
+
+      // Filter by selected month
+      if (selectedMonth && expenseDate.format("MM") !== selectedMonth) {
+        return false;
+      }
+
+      return true; // Return all expenses if no filter is applied
+    });
+  };
+  // ----------- TO FILTER ACCORDING TO MONTH --------
+
+  const displayedExpenses = showAll
+    ? filterExpenses(expenses)
+    : filterExpenses(expenses).slice(0, 5);
 
   return (
     <SafeAreaView className="h-full">
       <MenuBar needUser={true} navigation={navigation} title={"Expenses"} />
 
-      <TotalFlowGradient loading={loading} activeFolder={activeFolder} />
+      <View className="mt-5 w-72">
+        <Text className="text-gray-400 text-xs px-4">
+          Choose month to filter expenses!
+        </Text>
+
+        <View className="w-44">
+          <Picker
+            selectedValue={selectedMonth}
+            onValueChange={(itemValue) => setSelectedMonth(itemValue)}
+          >
+            {moment.months().map((month, index) => (
+              <Picker.Item
+                label={month}
+                value={index + 1 < 10 ? `0${index + 1}` : `${index + 1}`}
+                key={index}
+                className="text-gray-800"
+              />
+            ))}
+          </Picker>
+        </View>
+      </View>
+
+      <TotalFlowGradient
+        loading={loading}
+        activeFolder={activeFolder}
+        filterExpenses={filterExpenses}
+      />
 
       <Folders activeFolder={activeFolder} setActiveFolder={setActiveFolder} />
 

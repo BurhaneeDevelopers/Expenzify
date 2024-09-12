@@ -6,11 +6,11 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import RBSheet from "react-native-raw-bottom-sheet";
-import { Add } from "iconsax-react-native";
+import { Add, Calendar } from "iconsax-react-native";
 import CustomDatePicker from "../Custom/DatePicker";
 import { useExpense } from "../../context/useExpense";
 import BottomSheet from "react-native-gesture-bottom-sheet";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const AddExpense = ({ user, activeFolder }) => {
   const [expenseName, setExpenseName] = useState("");
@@ -18,6 +18,8 @@ const AddExpense = ({ user, activeFolder }) => {
   const [expenseDesc, setExpenseDesc] = useState("");
   const [date, setDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
+
+  const [isDateRangePickerVisible, setDateRangePickerVisible] = useState(false);
 
   const { addExpenseInDB } = useExpense();
 
@@ -113,7 +115,29 @@ const AddExpense = ({ user, activeFolder }) => {
               }}
             />
 
-            <CustomDatePicker onDateChange={setDate} />
+            {/* <CustomDatePicker onDateChange={setDate} /> */}
+            <View className="flex-col justify-start items-start">
+              <Text className="mt-5 mb-2">Select Date</Text>
+
+              <Pressable
+                onPress={() => setDateRangePickerVisible(true)}
+                className="bg-[#3B47DE] p-2 rounded-md flex-row items-center gap-x-2 ml-0.5"
+              >
+                <Text className="text-white">{date.toDateString()}</Text>
+                <Calendar color="#fff" size={18} />
+              </Pressable>
+            </View>
+
+            <DateTimePickerModal
+              isVisible={isDateRangePickerVisible}
+              mode="date"
+              onConfirm={(e) => {
+                setDateRangePickerVisible(false);
+                setDate(e);
+              }}
+              onCancel={() => setDateRangePickerVisible(false)}
+              isRangePicker // Ensure the date picker supports range selection
+            />
 
             <Pressable
               onPress={handleAddNewExpense}

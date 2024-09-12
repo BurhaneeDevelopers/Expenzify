@@ -5,10 +5,18 @@ import { useExpense } from "../../context/useExpense";
 import Skeleton from "../Custom/Skeleton";
 import AddExpense from "../Home/AddExpense";
 
-const TotalFlowGradient = ({ loading, activeFolder, user, navigation }) => {
+const TotalFlowGradient = ({
+  loading,
+  activeFolder,
+  user,
+  navigation,
+  filterExpenses,
+}) => {
   const { expenses } = useExpense();
 
-  const totalExpense = expenses.reduce((acc, doc) => {
+  const filteredExpense = filterExpenses(expenses);
+
+  const totalExpense = filteredExpense.reduce((acc, doc) => {
     return acc + (Number(doc.expenseAmount) || 0);
   }, 0);
   return (
