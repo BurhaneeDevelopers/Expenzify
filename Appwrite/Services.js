@@ -12,7 +12,7 @@ export const listExpenseCountApi = async (userId, activeFolder) => {
       : "66be27c500242eeb7e04", // collectionId
     [Query.limit(1), Query.equal("userId", userId)]
   );
-  return result;
+  return result.total;
 };
 
 export const listExpenseApi = async (userId, activeFolder) => {
