@@ -34,6 +34,14 @@
     },
     "updates": {
       "url": "https://u.expo.dev/d7c86db2-fe0d-4d38-997f-8d9f3df3a8d5"
-    }
+    },
+    "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "taheri_dev72"
+        }
+      ]
+    ]
   }
 }

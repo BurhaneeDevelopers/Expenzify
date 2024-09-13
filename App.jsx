@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { Text, TextInput, View } from "react-native";
+import { ActivityIndicator, Text, TextInput, View } from "react-native";
 import {
   Add,
+  ChartCircle,
   Home3,
   Wallet,
   Wallet1,
@@ -16,6 +17,7 @@ import {
   Wallet3,
 } from "iconsax-react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Updates from "expo-updates";
 
 // ----- SCREENS
 import HomeScreen from "./Screens/HomeScreen";
@@ -116,6 +118,26 @@ export default function App() {
     setUserSignedIn();
   }, []);
 
+  const { currentlyRunning, isUpdateAvailable, isUpdatePending } =
+    Updates.useUpdates();
+
+  useEffect(() => {
+    if (isUpdatePending) {
+      // Update has successfully downloaded; apply it now
+      Updates.reloadAsync();
+    }
+  }, [isUpdatePending]);
+
+  useEffect(() => {
+    if (isUpdateAvailable) {
+      Updates.fetchUpdateAsync();
+    }
+  }, []);
+
+  const runTypeMessage = currentlyRunning.isEmbeddedLaunch
+    ? "This app is running from built-in code"
+    : "Updating your experience… almost there :)";
+
   if (Text.defaultProps) {
     Text.defaultProps.allowFontScaling = false;
   } else {
@@ -139,8 +161,13 @@ export default function App() {
           // barStyle="dark-content"
           style="light"
         />
+        {isUpdateAvailable && currentlyRunning ? (
+          <View className="h-screen w-screen flex-col justify-center items-center">
+            <ActivityIndicator color={"#4F46E5"} size={64} />
 
-        {user ? (
+            <Text>{runTypeMessage}</Text>
+          </View>
+        ) : user ? (
           <AuthenticatedNavigator Stack={Stack} StackScreen={StackScreen} />
         ) : (
           <UnAuthenticatedNavigator Stack={Stack} />
