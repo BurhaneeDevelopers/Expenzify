@@ -55,7 +55,7 @@ export const ExpenseProvider = ({ children }) => {
         setExpenseName("");
         setExpenseAmount("");
         setExpenseDesc("");
-        setDate("");
+        setDate(new Date());
       }
     } catch (error) {
       console.log(error);

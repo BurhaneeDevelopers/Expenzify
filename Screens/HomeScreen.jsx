@@ -9,8 +9,8 @@ import Folders from "../Components/Folders";
 import HomeSkeletonBody from "../Components/Home/HomeSkeletonBody";
 import { useAuth } from "../context/useAuth";
 import { ArrowDown2 } from "iconsax-react-native";
-import { Picker } from "@react-native-picker/picker";
 import moment from "moment";
+import Filter from "../Components/Blocks/Filter";
 
 const HomeScreen = ({ navigation }) => {
   const [activeFolder, setActiveFolder] = useState("Personal");
@@ -74,27 +74,10 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView className="h-full">
       <MenuBar needUser={true} navigation={navigation} title={"Expenses"} />
 
-      <View className="mt-5 w-72">
-        <Text className="text-gray-400 text-xs px-4">
-          Choose month to filter expenses!
-        </Text>
-
-        <View className="w-44">
-          <Picker
-            selectedValue={selectedMonth}
-            onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-          >
-            {moment.months().map((month, index) => (
-              <Picker.Item
-                label={month}
-                value={index + 1 < 10 ? `0${index + 1}` : `${index + 1}`}
-                key={index}
-                className="text-gray-800"
-              />
-            ))}
-          </Picker>
-        </View>
-      </View>
+      <Filter
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
 
       <TotalFlowGradient
         loading={loading}
